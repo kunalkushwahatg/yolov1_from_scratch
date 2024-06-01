@@ -1,8 +1,9 @@
 import numpy as np
 import xml.etree.ElementTree as ET
 from helper_functions import read_annotation , reduce_image_size
+import pickle 
 
-class GetLabel():
+class Label():
     def __init__(self,n_grids,n_boxes):
         self.n_grids = n_grids
         self.n_boxes = n_boxes
@@ -41,6 +42,7 @@ class GetLabel():
 
             grid_x = int(x * self.n_grids)
             grid_y = int(y * self.n_grids)
+            
             cell_x = (x * self.n_grids) - grid_x
             cell_y = (y * self.n_grids) - grid_y
     
@@ -51,3 +53,25 @@ class GetLabel():
             labels[grid_y, grid_x, ( 5*n_boxes + i*self.class_size) + class_id] = 1
         return np.array(image),labels
 
+    def get_annotations(self,label,image_size,threshold_confiendence):
+        
+        matrix = np.argmax( label,axis=2)
+        flat_indices = np.flatnonzero(matrix)
+        row_indices, col_indices = np.unravel_index(flat_indices,matrix.shape)
+        positions = list(zip(row_indices, col_indices))
+
+        annotaions = []
+        for i,(grid_y,grid_x) in enumerate(positions):
+            if annotaions >= threshold_confiendence:
+                cell_x, cell_y, box_width, box_height, confiedence_score  =  label[grid_y, grid_x,5*i:5*(i+1)]
+                x = (grid_x + cell_x) / self.n_grids
+                y = (grid_y + cell_y) / self.n_grids
+                X = x * image_size[1]
+                Y = y * image_size[0]
+                annotaions.append([X,Y,box_width,box_height,confiedence_score])
+        return annotaions
+
+
+    
+f = open("C:/Users/kunalkushwahatg/Desktop/yolov1_from_scratch/data/dataset1.pickle","rb")
+dataset = pickle.load(f)
