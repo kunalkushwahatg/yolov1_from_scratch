@@ -2,13 +2,18 @@
 import config
 import torch
 import matplotlib.pyplot as plt
+from utils.get_labels import Label
+from visualization import Visualize
+import imageio
+import cv2
+
 
 
 class Evaluate:
     def __init__(self):
         self.train_loss = []
         self.val_loss = []
-        pass
+        self.images_for_gif = []
 
     
     def batch_loss(self,model,criteriation,data):
@@ -56,7 +61,7 @@ class Evaluate:
         plt.show()
 
     
-    def predict(self,model,img_data,threshold=0.5,retun_boxes=False):
+    def predict(self,model,img_data):
         '''
         input: model : model object
                data : image data
@@ -66,3 +71,28 @@ class Evaluate:
         model.eval()
         with torch.no_grad():
             prediction = model(img_data.to(config.DEVICE))
+            return prediction
+        
+    def predict_image(self,model,img_data):
+        '''
+        input: model : model object
+               data : image data
+        output: prediction : bounding box in image 
+        '''
+        prediction = self.predict(model,img_data)
+        label = Label()
+        visualize = Visualize()
+
+        coordinates = label.get_annotations(prediction)
+        image = visualize.draw_bounding_boxes(image,coordinates)
+        return  image
+    
+    def save_gif(self,save_path):
+        '''
+        input: images :save_path : path to save the gif
+        output: Saves the gif
+        '''
+        # Convert BGR images to RGB
+        # Save images as gif
+        imageio.mimsave(save_path, self.images_for_gif, duration=0.5)  # duration is the time between frames in seconds
+

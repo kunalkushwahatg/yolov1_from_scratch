@@ -16,7 +16,7 @@ LEARING_RATE = 0.001
 MOMENTUM = 0.9
 WEIGHT_DECAY = 0.0005
 PRINT_EVERY = 5
-
+TRAIN_TEST_SPLIT_RATIO = 0.9
 
 TRANSFORM = transforms.Compose([
     transforms.ToTensor(),
