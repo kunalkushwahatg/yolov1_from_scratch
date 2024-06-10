@@ -12,7 +12,7 @@ This is the loss function for the YOLO model. The loss function is a combination
 
 
 class YoloLoss(nn.Module):
-    def __init__(self, lambda_coord, lambda_noobj, lambda_obj, lambda_class):
+    def __init__(self):
         super(YoloLoss, self).__init__()
         self.lambda_noobj = 0.5
         self.lambda_coord = 5

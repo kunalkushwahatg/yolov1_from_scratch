@@ -26,9 +26,7 @@ def read_annotation(xml_path,n_boxes):
     return boxes,names
 
 
-def reduce_image_size(image_path,new_size,box_coordinates):
-    image = cv2.imread(image_path)
-
+def reduce_image_size(image,new_size,box_coordinates):
     image_size = image.shape
 
     new_width = new_size[0]
@@ -38,6 +36,7 @@ def reduce_image_size(image_path,new_size,box_coordinates):
 
     reduce_ratio_width = new_width/image_size[1]
     reduce_ratio_height = new_height/image_size[0]
+
 
     new_coordinates = []
     for coordinate in box_coordinates:

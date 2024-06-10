@@ -2,6 +2,7 @@ import numpy as np
 import xml.etree.ElementTree as ET
 from helper_functions import read_annotation , reduce_image_size
 import pickle 
+import cv2
 
 class Label():
     def __init__(self,n_grids,n_boxes):
@@ -16,7 +17,8 @@ class Label():
 
 
         coordinates , names = read_annotation(annotation_path,self.n_boxes)
-        image , new_coordinates = reduce_image_size(image_path,new_size,coordinates)
+        image = cv2.imread(image_path)
+        image , new_coordinates = reduce_image_size(image,new_size,coordinates)
         
         labels = np.zeros((self.n_grids,self.n_grids, self.n_boxes*5 + self.n_boxes*self.class_size ))
 
@@ -53,25 +55,25 @@ class Label():
             labels[grid_y, grid_x, ( 5*n_boxes + i*self.class_size) + class_id] = 1
         return np.array(image),labels
 
-    def get_annotations(self,label,image_size,threshold_confiendence):
-        
-        matrix = np.argmax( label,axis=2)
+    def get_annotations(self, label, image_size, threshold_confiendence):
+        matrix = np.argmax(label, axis=2)
         flat_indices = np.flatnonzero(matrix)
-        row_indices, col_indices = np.unravel_index(flat_indices,matrix.shape)
+        row_indices, col_indices = np.unravel_index(flat_indices, matrix.shape)
         positions = list(zip(row_indices, col_indices))
 
-        annotaions = []
-        for i,(grid_y,grid_x) in enumerate(positions):
-            if annotaions >= threshold_confiendence:
-                cell_x, cell_y, box_width, box_height, confiedence_score  =  label[grid_y, grid_x,5*i:5*(i+1)]
+        annotations = []
+        for i, (grid_y, grid_x) in enumerate(positions):
+            if label[grid_y, grid_x, 4] >= threshold_confiendence:
+                cell_x, cell_y, box_width, box_height, confidence_score = label[grid_y, grid_x, 5*i:5*(i+1)]
                 x = (grid_x + cell_x) / self.n_grids
                 y = (grid_y + cell_y) / self.n_grids
                 X = x * image_size[1]
                 Y = y * image_size[0]
-                annotaions.append([X,Y,box_width,box_height,confiedence_score])
-        return annotaions
-
+                annotations.append([X, Y, box_width, box_height, confidence_score])
+        return annotations
 
     
 f = open("C:/Users/kunalkushwahatg/Desktop/yolov1_from_scratch/data/dataset1.pickle","rb")
 dataset = pickle.load(f)
+lb = Label(7,2)
+print(lb.get_annotations(dataset[0][1],(224,224),0.5))

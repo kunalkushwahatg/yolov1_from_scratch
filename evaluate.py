@@ -1,8 +1,9 @@
  #recives the batch of dataloader and computes the accuracy and loss use class
 import config
 import torch
-from torch.functional import F
 import matplotlib.pyplot as plt
+
+
 class Evaluate:
     def __init__(self):
         self.train_loss = []
@@ -53,3 +54,15 @@ class Evaluate:
 
         plt.legend()
         plt.show()
+
+    
+    def predict(self,model,img_data,threshold=0.5,retun_boxes=False):
+        '''
+        input: model : model object
+               data : image data
+        output: prediction : model prediction
+        '''
+
+        model.eval()
+        with torch.no_grad():
+            prediction = model(img_data.to(config.DEVICE))

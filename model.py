@@ -137,23 +137,23 @@ class YoloMain(nn.Module):
         x = self.fc2(x)
         x = x.view(-1, config.N_GRIDS, config.N_GRIDS, (config.N_BOXES * 5 + config.N_BOXES * config.N_CLASSES))
         return x
+# # image_shape = (batch_size,_num_channels, height, width)
+# x = torch.randn(1, 3, 224, 224,device=config.DEVICE)   
+# model = YoloMain()
+# model = model.to(config.DEVICE)
 
-#image_shape = (batch_size,_num_channels, height, width)
-x = torch.randn(1, 3, 224, 224,device=config.DEVICE)   
-model = YoloMain()
-model = model.to(config.DEVICE)
+# #print runtime in sec of model
+# import time
+# start = time.time()
+# output = model(x)
+# end = time.time()
 
-#print runtime in sec of model
-import time
-start = time.time()
-output = model(x)
-end = time.time()
-
-#calculate fps
-fps = 1/(end-start)
+# #calculate fps
+# fps = 1/(end-start)
 
 
-print('FPS:',fps)
-print('Runtime:', end - start , 'sec')
-#print modelsize in MB
-print('Model size:',sum(p.numel() for p in model.parameters()) / 1e6 , 'MB')
+# print('FPS:',fps)
+# print('Runtime:', end - start , 'sec')
+# #print modelsize in MB
+# print('Model size:',sum(p.numel() for p in model.parameters()) / 1e6 , 'MB')
+
