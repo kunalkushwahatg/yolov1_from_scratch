@@ -1,7 +1,5 @@
 import numpy as np
-import xml.etree.ElementTree as ET
-from helper_functions import read_annotation , reduce_image_size
-import pickle 
+from utils.helper_functions import read_annotation , reduce_image_size
 import cv2
 
 class Label():
@@ -73,7 +71,3 @@ class Label():
         return annotations
 
     
-f = open("C:/Users/kunalkushwahatg/Desktop/yolov1_from_scratch/data/dataset1.pickle","rb")
-dataset = pickle.load(f)
-lb = Label(7,2)
-print(lb.get_annotations(dataset[0][1],(224,224),0.5))

@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 from utils.get_labels import Label
 from visualization import Visualize
 import imageio
-import cv2
-
 
 
 class Evaluate:

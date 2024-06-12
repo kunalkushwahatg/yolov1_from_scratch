@@ -6,10 +6,16 @@ import pickle
 import config
 from model import YoloMain
 
+#clear cpu memory that is pickle data loaded
+torch.cuda.empty_cache()
+
+
 def main():
     
     # Load data
-    data = pickle.load(open('C:/Users/kunalkushwahatg/Desktop/yolov1_from_scratch/data/dataset1.pickle', 'rb'))
+
+    data = pickle.load(open('C:/Users/kunalkushwahatg/Desktop/yolov1_from_scratch/data/dataset.pickle', 'rb'))
+    print("dataset sucessfully loaded")
 
     # Create a dataset
     dataset = MyDataset(data, transform=config.TRANSFORM)
@@ -25,10 +31,11 @@ def main():
 
     
     model = YoloMain()  
+    print("model sucessfully created")
 
     # Create a Train object and start training
-    trainer = Train(model, train_loader, val_loader)
-    model, train_loss, val_loss = trainer.train(config.EPOCHS)
+    trainer = Train()
+    model, train_loss, val_loss = trainer.train(model, train_loader, val_loader,'data/2007_000027.jpg')
 
     # Save the trained model
     torch.save(model.state_dict(), 'models/model.pth')

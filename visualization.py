@@ -57,5 +57,3 @@ class Visualize():
 
 
 
-viz = Visualize()
-viz.draw_box_from_file('data/2007_000027.jpg','data/2007_000027.xml')

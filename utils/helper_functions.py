@@ -1,7 +1,6 @@
 import cv2
 import xml.etree.ElementTree as ET
-import numpy as np
-from lxml import etree
+
 
 
 def read_annotation(xml_path,n_boxes):
