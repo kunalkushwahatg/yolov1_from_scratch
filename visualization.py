@@ -1,6 +1,6 @@
 import cv2
 import config
-from utils.helper_functions import read_annotation , reduce_image_size
+from helper_functions import read_annotation , reduce_image_size
 from PIL import Image
 import numpy as np
 

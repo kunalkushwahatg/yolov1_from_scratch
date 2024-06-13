@@ -1,11 +1,17 @@
-import numpy as np
 import os
 from tqdm import tqdm_gui
 from get_labels import Label
 import pickle 
+import argparse
 
-images_path = "E:/VOC2012_train_val/VOC2012_train_val/JPEGImages/"
-annotations_path = "E:/VOC2012_train_val/VOC2012_train_val/Annotations/"
+parser = argparse.ArgumentParser(description="Process some files.")
+parser.add_argument('--files', nargs='+', help='List of file paths to process')
+
+args = parser.parse_args()
+
+
+images_path = args.files[0]
+annotation_path = args.files[1]
 
 dataset = []
 
@@ -21,4 +27,4 @@ for i,image_path in tqdm_gui(enumerate(os.listdir(images_path))):
     except Exception as e:
         pass
     
-pickle.dump(dataset,open("dataset1.pkl","wb"))
+pickle.dump(dataset,open("dataset2.pkl","wb"))

@@ -5,24 +5,16 @@ from dataset import MyDataset
 import pickle
 import config
 from model import YoloMain
-import argparse
-
 
 #clear cpu memory that is pickle data loaded
 torch.cuda.empty_cache()
-
-parser = argparse.ArgumentParser(description="Process some files.")
-parser.add_argument('--files', nargs='+', help='dataset file path to process')
-
-args = parser.parse_args()
-
 
 
 def main():
     
     # Load data
 
-    data = pickle.load(open(args.files[0], 'rb'))
+    data = pickle.load(open('C:/Users/kunalkushwahatg/Desktop/yolov1_from_scratch/data/dataset1.pickle', 'rb'))
     print("dataset sucessfully loaded")
 
     # Create a dataset

@@ -1,5 +1,5 @@
 import numpy as np
-from utils.helper_functions import read_annotation , reduce_image_size
+from helper_functions import read_annotation , reduce_image_size
 import cv2
 
 class Label():
