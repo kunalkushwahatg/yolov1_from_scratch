@@ -19,7 +19,7 @@ for i,image_path in tqdm_gui(enumerate(os.listdir(images_path))):
 
     annotation_filename = image_path.split(".")[0]+".xml"
     image_path = images_path+image_path
-    annotation_path = annotations_path+annotation_filename
+    annotation_path = annotation_path+annotation_filename
     gl = Label(n_grids=7,n_boxes=2)  
     try:
         image , label = gl.get_label(image_path,annotation_path)
