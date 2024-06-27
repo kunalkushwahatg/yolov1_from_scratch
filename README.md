@@ -24,3 +24,16 @@ To get started with the project, clone the repository and install the required d
 git clone https://github.com/kunalkushwahatg/yolov1_from_scratch.git
 cd yolov1_from_scratch
 pip install -r requirements.txt
+```
+
+## Usage
+
+### Training
+
+To train the model, use the train.py script:
+
+```bash
+python train.py --data_path path/to/dataset --config config.yaml
+```
+
+# incomplete
